@@ -1,0 +1,3 @@
+[submodule "llm-eval-harness"]
+	path = llm-eval-harness
+	url = git@ipads.se.sjtu.edu.cn:ipads-storage/codebase/modelbase/llm-eval-harness.git
