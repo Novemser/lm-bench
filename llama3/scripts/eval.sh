@@ -1,12 +1,14 @@
-outputDir="./output/copa"
-echo ${outputDir}
-mkdir -p ${outputDir}
-tasks="copa"
-model_path="./llama3_hf_weights"
-lm_eval --model hf \
-    --model_args \
-        pretrained=${model_path},dtype="float32",record_weight_wise_activation=True \
-    --tasks ${tasks}  \
-    --device cpu \
-    --batch_size auto:1 \
-    --output_path ${outputDir}
+weight_importace_dir=./weight_importance/${tasks}
+output_dir=./output/${tasks}
+echo "output_dir:"${output_dir}
+echo "weight_importace_dir:"${weight_importace_dir}
+mkdir -p ${output_dir}
+mkdir -p ${weight_importace_dir}
+
+# lm_eval --model hf \
+#     --model_args \
+#         pretrained=${model_path},record_weight_wise_activation=True,output_path=${weight_importace_dir} \
+#     --tasks ${tasks}  \
+#     --device ${device} \
+#     --batch_size auto:1 \
+#     --output_path ${output_dir}
