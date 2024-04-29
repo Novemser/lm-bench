@@ -1,0 +1,6 @@
+./output
+./llama3
+./llama3_hf_weight
+./weight_importance
+./log*
+./test
