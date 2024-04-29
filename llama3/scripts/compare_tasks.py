@@ -5,11 +5,10 @@ import json
 import time
 
 timestamp = str(int(time.time()))
+topk_percentage = 0.01
 weight_importace_dir = "/root/autodl-tmp/weight_importance"
-save_similarity_path = "./output/similarity_" + timestamp + ".json"
-save_overlap_path = "./output/overlap_score_" + timestamp + ".json"
-topk_percentage = 0.1
-
+save_similarity_path = "./output/similarity_" + timestamp + "_" + str(topk_percentage) + ".json"
+save_overlap_path = "./output/overlap_score_" + timestamp + "_" + str(topk_percentage) + ".json"
 
 def cal_overlap_score(weight1: torch.Tensor, weight2: torch.Tensor, topk_percentage) -> float:
     weight1 = weight1.view(1, -1)
