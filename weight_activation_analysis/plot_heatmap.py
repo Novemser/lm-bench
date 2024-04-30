@@ -10,11 +10,15 @@ from constants import reverse_order, model_name, aggregate_results, topk_percent
 postfix = str(topk_percentage)
 overlap_score_path = os.path.join('output', model_name)
 similarity_path = os.path.join('output', model_name)
+overlap_score_file_name = 'overlap_score_' + postfix + '.json'
+similarity_score_file_name = 'similarity_score_' + postfix + '.json'
 if reverse_order:
     overlap_score_path = os.path.join(overlap_score_path, 'reverse')
-    overlap_score_path = os.path.join(similarity_path, 'reverse')
-overlap_score_path = os.path.join(overlap_score_path, 'reverse_overlap_score_' + postfix + '.json')
-similarity_path = os.path.join(similarity_path, 'reverse_similarity_' + postfix + '.json')
+    similarity_path = os.path.join(similarity_path, 'reverse')
+    overlap_score_file_name = "reverse_" + overlap_score_file_name
+    similarity_score_file_name = "reverse_" + similarity_score_file_name
+overlap_score_path = os.path.join(overlap_score_path, overlap_score_file_name)
+similarity_path = os.path.join(similarity_path, similarity_score_file_name)
 
 
 def load_data(path: str):
