@@ -4,3 +4,5 @@ weight_importance
 log*
 test
 image
+__pycache__
+.vscode

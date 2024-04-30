@@ -3,12 +3,12 @@ import torch
 import torch.nn.functional as F
 import json
 import time
-from constants import reverse_order, timestamp, model_name, weight_importace_dir, topk_percentage, task_names
+from constants import reverse_order, model_name, weight_importace_dir, topk_percentage, task_names, max_threads
 import utils
 import concurrent.futures
 
-similarity_file_name = "similarity_" + timestamp + "_" + str(topk_percentage) + ".json"
-overlap_file_name = "overlap_score_" + timestamp + "_" + str(topk_percentage) + ".json"
+similarity_file_name = "similarity_" + str(topk_percentage) + ".json"
+overlap_file_name = "overlap_score_" + str(topk_percentage) + ".json"
 
 save_similarity_path = os.path.join("output", model_name)
 save_overlap_path = os.path.join("output", model_name)
@@ -51,7 +51,7 @@ def compare_two(task1: str, task2: str):
     weight_names.sort()
     similarity_table = {}
     overlap_table = {}
-    with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
         results = {}
         for weight_name in weight_names:
             weight_path_1 = weight_importace_dir + '/' + task1 + '/' + weight_name

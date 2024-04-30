@@ -5,12 +5,17 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import json
 import utils
+from constants import reverse_order, timestamp, model_name, weight_importace_dir, topk_percentage, task_names
 
-model_name = "Llama-2-7b-chat-hf"
-postfix = "1714443053_0.01"
-overlap_score_path = 'output/' + model_name + '/overlap_score_' + postfix + '.json'
-similarity_path = 'output/' + model_name + '/similarity_' + postfix + '.json'
-reverse_order = True
+postfix = "0.01"
+overlap_score_path = os.path.join('output', model_name)
+similarity_path = os.path.join('output', model_name)
+if reverse_order:
+    overlap_score_path = os.path.join(overlap_score_path, 'reverse')
+    overlap_score_path = os.path.join(similarity_path, 'reverse')
+overlap_score_path = os.path.join(overlap_score_path, 'reverse_overlap_score_' + postfix + '.json')
+similarity_path = os.path.join(similarity_path, 'reverse_similarity_' + postfix + '.json')
+
 
 def load_data(path: str):
     with open(path, 'r') as f:
@@ -88,4 +93,4 @@ if reverse_order:
     title_prefix = "(Reverse) "
 
 plot_heatmap(overlap_score_path, overlap_score_outpath, title_prefix + 'Overlap Score of ')
-plot_heatmap(similarity_path, similarity_score_outpath, title_prefix + 'Similarity Score of ')
+# plot_heatmap(similarity_path, similarity_score_outpath, title_prefix + 'Similarity Score of ')
