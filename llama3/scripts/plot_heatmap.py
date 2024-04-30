@@ -1,11 +1,14 @@
+import os
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
-
-overlap_score_path = 'output/overlap_score_1714395810_0.01.json'
-similarity_path = 'output/similarity_1714395810_0.01.json'
+model_name = "Llama-2-7b-chat-hf"
+postfix = "1714443053_0.01"
+overlap_score_path = 'output/' + model_name + '/overlap_score_' + postfix + '.json'
+similarity_path = 'output/' + model_name + '/similarity_' + postfix + '.json'
+reverse_order = True
 
 def load_data(path: str):
     with open(path, 'r') as f:
@@ -16,7 +19,6 @@ def load_data(path: str):
         task1, task2 = task_pair.split('vs')
         task1.strip()
         task2.strip()
-        print(task1, task2)
         for weight_name, score in group_table.items():
             if weight_name not in preprocessed_data:
                 preprocessed_data[weight_name] = {}
@@ -55,12 +57,13 @@ def plot_heatmap(path: str, save_path: str, title_prefix: str, aggregate=True) -
                     aggregated_weight_map[agg_weight_name][task1][task2] /= \
                         aggregated_weight_map_counter[agg_weight_name][task1][task2]
         all_weight_map = aggregated_weight_map
+        title_prefix = '(Aggregated)' + title_prefix
     for weight_name, weight_map in all_weight_map.items():
         data = weight_map
         df = pd.DataFrame(data)
 
         # 使用Seaborn库来绘制热力图
-        sns.heatmap(df, annot=True, cmap='coolwarm', fmt=".3f", linewidths=.5)
+        sns.heatmap(df, annot=True, cmap='coolwarm', fmt=".3f", linewidths=.5, vmin=0, vmax=1.0)
 
         # 添加标题
         plt.title(title_prefix + weight_name)
@@ -68,5 +71,17 @@ def plot_heatmap(path: str, save_path: str, title_prefix: str, aggregate=True) -
         plt.savefig(save_path + '/' + weight_name + '.png')
         plt.clf()
 
-plot_heatmap(overlap_score_path, 'image/aggerage/overlapscore', 'Overlap Score of ')
-plot_heatmap(similarity_path, 'image/aggerage/similarity', 'Similarity Score of ')
+
+overlap_score_outpath = 'image/' + model_name + '/aggerage/overlapscore'
+similarity_score_outpath = 'image/' + model_name + '/aggerage/similarity'
+if reverse_order:
+    overlap_score_outpath = os.path.join(overlap_score_outpath, 'reverse')
+    similarity_score_outpath = os.path.join(similarity_score_outpath, 'reverse')
+
+if not os.path.exists(overlap_score_outpath):
+    os.makedirs(overlap_score_outpath)
+if not os.path.exists(similarity_score_outpath):
+    os.makedirs(similarity_score_outpath)
+
+plot_heatmap(overlap_score_path, overlap_score_outpath, 'Overlap Score of ')
+plot_heatmap(similarity_path, similarity_score_outpath, 'Similarity Score of ')

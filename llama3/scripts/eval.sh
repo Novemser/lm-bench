@@ -1,3 +1,4 @@
+echo "Using python path ${PYTHONPATH}"
 weight_importace_dir=/root/autodl-tmp/weight_importance/${MODEL_NAME}/${tasks}
 output_dir=./output/${MODEL_NAME}/${tasks}
 echo "output_dir:"${output_dir}
