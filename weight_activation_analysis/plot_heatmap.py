@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import json
 import utils
-from constants import reverse_order, timestamp, model_name, weight_importace_dir, topk_percentage, task_names
+from constants import reverse_order, model_name, aggregate_results, topk_percentage
 
-postfix = "0.01"
+postfix = str(topk_percentage)
 overlap_score_path = os.path.join('output', model_name)
 similarity_path = os.path.join('output', model_name)
 if reverse_order:
@@ -92,5 +92,5 @@ title_prefix = ""
 if reverse_order:
     title_prefix = "(Reverse) "
 
-plot_heatmap(overlap_score_path, overlap_score_outpath, title_prefix + 'Overlap Score of ')
+plot_heatmap(overlap_score_path, overlap_score_outpath, title_prefix + 'Overlap Score of ', aggregate_results)
 # plot_heatmap(similarity_path, similarity_score_outpath, title_prefix + 'Similarity Score of ')
