@@ -9,3 +9,4 @@ weight_importace_dir = os.path.join("/root/autodl-tmp/weight_importance", model_
 output_path_prefix = "output"
 number_of_bins = 10
 aggregate_results = False
+reverse_order = True

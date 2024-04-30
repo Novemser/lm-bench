@@ -4,6 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
+import utils
+
 model_name = "Llama-2-7b-chat-hf"
 postfix = "1714443053_0.01"
 overlap_score_path = 'output/' + model_name + '/overlap_score_' + postfix + '.json'
@@ -72,16 +74,18 @@ def plot_heatmap(path: str, save_path: str, title_prefix: str, aggregate=True) -
         plt.clf()
 
 
-overlap_score_outpath = 'image/' + model_name + '/aggerage/overlapscore'
-similarity_score_outpath = 'image/' + model_name + '/aggerage/similarity'
+overlap_score_outpath = os.path.join('image', model_name, 'aggerage/overlapscore')
+similarity_score_outpath = os.path.join('image', model_name, 'aggerage/similarity')
 if reverse_order:
     overlap_score_outpath = os.path.join(overlap_score_outpath, 'reverse')
     similarity_score_outpath = os.path.join(similarity_score_outpath, 'reverse')
 
-if not os.path.exists(overlap_score_outpath):
-    os.makedirs(overlap_score_outpath)
-if not os.path.exists(similarity_score_outpath):
-    os.makedirs(similarity_score_outpath)
+utils.create_dir_if_not_exists(overlap_score_outpath)
+utils.create_dir_if_not_exists(similarity_score_outpath)
 
-plot_heatmap(overlap_score_path, overlap_score_outpath, 'Overlap Score of ')
-plot_heatmap(similarity_path, similarity_score_outpath, 'Similarity Score of ')
+title_prefix = ""
+if reverse_order:
+    title_prefix = "(Reverse) "
+
+plot_heatmap(overlap_score_path, overlap_score_outpath, title_prefix + 'Overlap Score of ')
+plot_heatmap(similarity_path, similarity_score_outpath, title_prefix + 'Similarity Score of ')
