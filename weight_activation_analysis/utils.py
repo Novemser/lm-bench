@@ -1,6 +1,7 @@
 import os
+from constants import weight_importace_dir
 
-def get_all_weight_name(weight_importace_dir: str, task: str) -> list[str]:
+def get_all_weight_name(task: str) -> list[str]:
     task_path = os.path.join(weight_importace_dir, task)
     return os.listdir(task_path).sort()
 

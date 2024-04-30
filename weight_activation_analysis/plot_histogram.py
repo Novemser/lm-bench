@@ -1,7 +1,7 @@
 import os
 import matplotlib.pyplot as plt
-from weight_activation_analysis.constants import model_name, weight_importace_dir, output_path_prefix, task_names, aggregate_results
-import weight_activation_analysis.utils as utils
+from constants import model_name, weight_importace_dir, output_path_prefix, task_names, aggregate_results
+import utils as utils
 import torch
 import seaborn as sns
 
