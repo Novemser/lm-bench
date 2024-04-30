@@ -1,7 +1,7 @@
 import time
 import os
 
-tasks = ['copa', 'lambada_openai', 'piqa', 'mmlu', 'gsm8k', 'arc_challenge']
+task_names = ['copa', 'lambada_openai', 'piqa', 'mmlu', 'gsm8k', 'arc_challenge']
 timestamp = str(int(time.time()))
 topk_percentage = 0.01
 model_name = "llama3_hf_weight"

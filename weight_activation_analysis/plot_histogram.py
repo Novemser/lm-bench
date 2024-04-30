@@ -1,15 +1,17 @@
 import os
 import matplotlib.pyplot as plt
-from weight_activation_analysis.constants import model_name, weight_importace_dir, output_path_prefix, number_of_bins
+from weight_activation_analysis.constants import model_name, weight_importace_dir, output_path_prefix, task_names
 import weight_activation_analysis.utils as utils
 import torch
+import seaborn as sns
 
 histogram_figure_path = os.path.join(output_path_prefix, model_name, 'weight_activation_histogram')
 utils.create_dir_if_not_exists(histogram_figure_path)
 
 def plot_weight_activation(weight: torch.tensor, weight_name: str):
     sorted_weights = weight.view(1, -1).sort().values.cpu()[0].numpy()
-    plt.hist(sorted_weights, bins=number_of_bins)
+    sns.kdeplot(data=sorted_weights, cumulative=True)
+    plt.legend()
     plt.savefig(os.path.join(histogram_figure_path, weight_name))
 
 def draw_histogram_of_task_weight_activations(task_name: str):
@@ -20,4 +22,5 @@ def draw_histogram_of_task_weight_activations(task_name: str):
         plot_weight_activation(weight)
         
 if __name__ == '__main__':
-    draw_histogram_of_task_weight_activations()
+    for task_name in task_names:
+        draw_histogram_of_task_weight_activations(task_name)
