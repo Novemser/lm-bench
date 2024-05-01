@@ -1,7 +1,8 @@
 import time
 import os
+from transformers.prune.sparsity_util import task_names as names
 
-task_names = ['copa', 'lambada_openai', 'piqa', 'mmlu', 'gsm8k', 'arc_challenge']
+task_names = names
 timestamp = str(int(time.time()))
 topk_percentage = 0.01
 model_name = "llama3_hf_weight"
